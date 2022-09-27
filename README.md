@@ -20,7 +20,7 @@ yarn add -D @accuser/svelte-store-array
 
 Filter the elements of an array that meet the condition specified in a callback function.
 
-```bash
+```js
 import { readable } from 'svelte/store';
 import { compact, filter } from '@accuser/svelte-store-array';
 
@@ -36,7 +36,7 @@ The `compact` higher-order store is a convenience that is equivalent to `filter(
 
 Calls a defined callback function on each element of an array, and returns an array that contains the results.
 
-```bash
+```js
 import { readable } from 'svelte/store';
 import { map } from '@accuser/svelte-store-array';
 
@@ -49,7 +49,7 @@ const stringList = map(list, (value) => value.toString()); // ["0", "1", "2", "3
 
 Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
 
-```bash
+```js
 import { readable } from 'svelte/store';
 import { reduce } from '@accuser/svelte-store-array';
 
@@ -62,7 +62,7 @@ const sum = reduce(list, (prev, curr) => prev + curr, 0); // 15
 
 Sorts an array. Unlike the `Array.prototype.sort`, the array is not sorted in place.
 
-```bash
+```js
 import { readable } from 'svelte/store';
 import { sort } from '@accuser/svelte-store-array';
 
