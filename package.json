@@ -1,6 +1,26 @@
 {
 	"name": "@accuser/svelte-store-array",
 	"version": "0.1.0",
+	"description": "Higher-order Svelte stores for array manipulation",
+	"keywords": [
+		"array",
+		"higher-order",
+		"store",
+		"svelte"
+	],
+	"homepage": "https://github.com/accuser/svelte-store-array/README.md",
+	"bugs": {
+		"url": "https://github.com/accuser/svelte-store-array/issues"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Matthew Gibbons",
+		"url": "https://github.com/accuser"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/accuser/svelte-store-array.git"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
