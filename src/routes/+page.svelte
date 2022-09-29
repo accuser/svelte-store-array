@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { readable } from 'svelte/store';
-	import { compact, filter, find, map, reduce, reverse, sort } from '$lib';
-	import group from '$lib/group';
+	import { compact, filter, find, group, map, reduce, reverse, sort } from '$lib';
+
+	import type { ReduceFn } from '$lib/types';
 
 	const list = readable([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
