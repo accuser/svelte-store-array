@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { readable } from 'svelte/store';
 	import { compact, filter, find, map, reduce, reverse, sort } from '$lib';
+	import group from '$lib/group';
 
 	const list = readable([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 	const compactList = compact(list);
-	const evenNumbers = filter(compactList, (value) => Math.round(value / 2) === value / 2);
-	const oddNumbers = filter(compactList, (value) => Math.round(value / 2) !== value / 2);
-	const descNumbers = sort(compactList, (a, b) => b - a);
+
+	const evenNumbers = filter(list, (value) => Math.round(value / 2) === value / 2);
+	const oddNumbers = filter(list, (value) => Math.round(value / 2) !== value / 2);
+
+	const descNumbers = sort(list, (a, b) => b - a);
 	const stringList = map(list, (value) => value.toString());
 	const found = find(list, (value) => value > 3);
 	const reversedList = reverse(list);
@@ -20,6 +23,8 @@
 	const sum: ReduceFn<number, number> = (prev, curr) => prev + curr;
 
 	const sumValue = reduce(list, sum, 0);
+
+	const grouped = group(list, (value) => (value % 2 === 0 ? 'even' : 'odd'));
 </script>
 
 <h1>Welcome to your library project</h1>
@@ -43,4 +48,6 @@
 	Found = {JSON.stringify($found)}
 
 	Reversed List = {JSON.stringify($reversedList)}
+
+	Grouped = {JSON.stringify($grouped)}
 </pre>
