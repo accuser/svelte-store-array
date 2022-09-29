@@ -1,19 +1,19 @@
-interface ComparatorFn<T> {
+export interface ComparatorFn<T> {
 	(a: T, b: T): number;
 }
 
-interface GroupFn<T> {
+export interface GroupFn<T> {
 	(value: T, index: number, array: T[]): string;
 }
 
-interface MapFn<T, U> {
+export interface MapFn<T, U> {
 	(value: T, index: number, array: T[]): U;
 }
 
-interface PredicateFn<T> {
+export interface PredicateFn<T> {
 	(value: T, index: number, array: T[]): boolean;
 }
 
-interface ReduceFn<T, U> {
+export interface ReduceFn<T, U> {
 	(previousValue: U, currentValue: T, currentIndex: number, array: T[]): U;
 }

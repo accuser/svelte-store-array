@@ -1,4 +1,5 @@
 import { derived, type Readable } from 'svelte/store';
+import type { GroupFn } from './types';
 
 const group = <T>(store: Readable<T[]>, callback: GroupFn<T>): Readable<{ [key: string]: T[] }> =>
 	derived(store, (values) =>
@@ -10,4 +11,4 @@ const group = <T>(store: Readable<T[]>, callback: GroupFn<T>): Readable<{ [key: 
 	);
 
 export default group;
-export { group };
+export { group, type GroupFn };
