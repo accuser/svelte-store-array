@@ -2,6 +2,10 @@ interface ComparatorFn<T> {
 	(a: T, b: T): number;
 }
 
+interface GroupFn<T> {
+	(value: T, index: number, array: T[]): string;
+}
+
 interface MapFn<T, U> {
 	(value: T, index: number, array: T[]): U;
 }

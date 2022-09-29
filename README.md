@@ -18,8 +18,8 @@ yarn add -D @accuser/svelte-store-array
 
 ### Filter
 
-Filter the elements of an array that meet the condition specified in a callback
-function.
+Filter the elements of the array store that meet the condition specified in the
+callback function.
 
 ```js
 import { readable } from 'svelte/store';
@@ -27,8 +27,8 @@ import { compact, filter } from '@accuser/svelte-store-array';
 
 const list = readable([0, 1, 2, 3, 4, 5]);
 
+const evenNumbers = filter(list, (value) => value % 2 === 0); // [0, 2, 4]
 const compactList = compact(list); // [1, 2, 3, 4, 5]
-const evenNumbers = filter(compactList, (value) => value % 2 === 0); // [2, 4]
 ```
 
 The `compact` higher-order store is a convenience that is equivalent to
@@ -47,6 +47,20 @@ const list = readable([0, 1, 2, 3, 4, 5]);
 
 const found = find(list, (value) => value === 4); // 4
 const notFound = find(list, (value) => value === 9); // undefined
+```
+
+### Group
+
+Groups the elements of the calling array according to the string values
+returned by a provided testing function.
+
+```js
+import { readable } from 'svelte/store';
+import { group } from '@accuser/svelte-store-array';
+
+const list = readable([0, 1, 2, 3, 4, 5]);
+
+const grouped = group(list, (value) => value % 2 ? 'odd' ? 'even'); // { "even": [0, 2, 4, 6, 8], "odd": [1, 3, 5, 7, 9] }
 ```
 
 ### Map
