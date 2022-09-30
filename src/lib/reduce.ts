@@ -1,5 +1,5 @@
 import { derived, type Readable } from 'svelte/store';
-import type { ReduceFn } from './types';
+import type { ReduceFn } from './types.js';
 
 const reduce = <T, U>(
 	store: Readable<T[]>,
