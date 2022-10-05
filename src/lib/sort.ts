@@ -1,8 +1,14 @@
 import { derived, type Readable } from 'svelte/store';
+import { asReadable, type MaybeReadable } from './helpers/maybe-readable';
 import type { ComparatorFn } from './types.js';
 
-const sort = <T>(store: Readable<T[]>, comparator?: ComparatorFn<T>): Readable<T[]> =>
-	derived(store, (values) => [...values].sort(comparator));
+const sort = <T>(
+	values: MaybeReadable<T[]>,
+	comparator?: MaybeReadable<ComparatorFn<T>>
+): Readable<T[]> =>
+	derived([asReadable(values), asReadable(comparator)], ([$values, $comparator]) =>
+		[...$values].sort($comparator)
+	);
 
 export default sort;
 export { sort, type ComparatorFn };

@@ -1,10 +1,14 @@
 import { derived, type Readable } from 'svelte/store';
+import { asReadable, type MaybeReadable } from './helpers/maybe-readable';
 import type { GroupFn } from './types.js';
 
-const group = <T>(store: Readable<T[]>, callback: GroupFn<T>): Readable<{ [key: string]: T[] }> =>
-	derived(store, (values) =>
-		values
-			.map((value, index, array) => ({ key: callback(value, index, array), value }))
+const group = <T>(
+	values: MaybeReadable<T[]>,
+	callback: MaybeReadable<GroupFn<T>>
+): Readable<{ [key: string]: T[] }> =>
+	derived([asReadable(values), asReadable(callback)], ([$values, $callback]) =>
+		$values
+			.map((value, index, array) => ({ key: $callback(value, index, array), value }))
 			.reduce((prev, { key, value }) => {
 				return { ...prev, [key]: [...(prev[key] ?? []), value] };
 			}, {} as { [key: string]: T[] })

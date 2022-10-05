@@ -16,6 +16,32 @@ yarn add -D @accuser/svelte-store-array
 
 ## Usage
 
+All of the higher-order store functions have parameters that are either a type (`<T>`) or a readable store of that type (`Readable<T>`). This means, for example, that you can lazily pass the array and predicate function arguments to the `filter` higher-order store function, and internally these will me transformed into readable stores:
+
+```js
+import { readable } from 'svelte/store';
+import { compact, filter } from '@accuser/svelte-store-array';
+
+const list = [0, 1, 2, 3, 4, 5];
+const even = (value) => value % 2 === 0;
+
+const evenNumbers = filter(list, even);
+```
+
+Using only stores:
+
+```js
+import { readable } from 'svelte/store';
+import { compact, filter } from '@accuser/svelte-store-array';
+
+const list = readable([0, 1, 2, 3, 4, 5]);
+const even = readable((value) => value % 2 === 0);
+
+const evenNumbers = filter(list, even);
+```
+
+Derived stores are used in the implementation of the higher-order store functions, so passing stores will mean that the higher-order store function returns a store that is subscribed to the stores you provide as arguments.
+
 ### Filter
 
 Filter the elements of the array store that meet the condition specified in the
@@ -27,8 +53,8 @@ import { compact, filter } from '@accuser/svelte-store-array';
 
 const list = readable([0, 1, 2, 3, 4, 5]);
 
-const evenNumbers = filter(list, (value) => value % 2 === 0); // [0, 2, 4]
-const compactList = compact(list); // [1, 2, 3, 4, 5]
+const evenNumbers = filter(list, (value) => value % 2 === 0); // get(eventNumbers) => [0, 2, 4]
+const compactList = compact(list); // get(compactList) => [1, 2, 3, 4, 5]
 ```
 
 The `compact` higher-order store is a convenience that is equivalent to
@@ -45,8 +71,8 @@ import { find } from '@accuser/svelte-store-array';
 
 const list = readable([0, 1, 2, 3, 4, 5]);
 
-const found = find(list, (value) => value === 4); // 4
-const notFound = find(list, (value) => value === 9); // undefined
+const found = find(list, (value) => value === 4); // get(found) => 4
+const notFound = find(list, (value) => value === 9); // get(notFound) => undefined
 ```
 
 ### Group
@@ -60,7 +86,7 @@ import { group } from '@accuser/svelte-store-array';
 
 const list = readable([0, 1, 2, 3, 4, 5]);
 
-const grouped = group(list, (value) => value % 2 ? 'odd' ? 'even'); // { "even": [0, 2, 4, 6, 8], "odd": [1, 3, 5, 7, 9] }
+const grouped = group(list, (value) => value % 2 ? 'odd' ? 'even'); // get(grouped) => { "even": [0, 2, 4, 6, 8], "odd": [1, 3, 5, 7, 9] }
 ```
 
 ### Map
@@ -73,7 +99,7 @@ import { map } from '@accuser/svelte-store-array';
 
 const list = readable([0, 1, 2, 3, 4, 5]);
 
-const stringList = map(list, (value) => value.toString()); // ["0", "1", "2", "3", "4", "5"]
+const stringList = map(list, (value) => value.toString()); // get(stringList) => ["0", "1", "2", "3", "4", "5"]
 ```
 
 ### Reduce
@@ -88,7 +114,7 @@ import { reduce } from '@accuser/svelte-store-array';
 
 const list = readable([0, 1, 2, 3, 4, 5]);
 
-const sum = reduce(list, (prev, curr) => prev + curr, 0); // 15
+const sum = reduce(list, (prev, curr) => prev + curr, 0); // get(sum) => 15
 ```
 
 ### Reverse
@@ -101,7 +127,7 @@ import { reverse } from '@accuser/svelte-store-array';
 
 const list = readable([0, 1, 2, 3, 4, 5]);
 
-const descending = reverse(list); // [5, 4, 3, 2, 1, 0]
+const descending = reverse(list); // get(descending) => [5, 4, 3, 2, 1, 0]
 ```
 
 ### Sort
@@ -114,7 +140,7 @@ import { sort } from '@accuser/svelte-store-array';
 
 const list = readable([0, 1, 2, 3, 4, 5]);
 
-const descending = sort(list, (a, b) => b - a); // [5, 4, 3, 2, 1, 0]
+const descending = sort(list, (a, b) => b - a); // get(descending) => [5, 4, 3, 2, 1, 0]
 ```
 
 ## Composition
@@ -130,5 +156,5 @@ const list = readable([0, 1, 2, 3, 4, 5]);
 const evenNumbersDescending = sort(
 	filter(compact(list), (value) => value % 2 === 0),
 	(a, b) => b - a
-); // [4, 2]
+); // get(evenNumbersDescending) => [4, 2]
 ```
