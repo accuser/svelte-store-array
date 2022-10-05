@@ -1,6 +1,6 @@
 {
 	"name": "@accuser/svelte-store-array",
-	"version": "0.3.1",
+	"version": "0.4.0",
 	"description": "Higher-order Svelte stores for array manipulation",
 	"keywords": [
 		"array",
