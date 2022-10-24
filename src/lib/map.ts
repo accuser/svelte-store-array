@@ -1,5 +1,5 @@
 import { derived, type Readable } from 'svelte/store';
-import { asReadable, type MaybeReadable } from './helpers/maybe-readable';
+import { asReadable, type MaybeReadable } from './helpers/maybe-readable.js';
 import type { MapFn } from './types.js';
 
 const map = <T, U>(
